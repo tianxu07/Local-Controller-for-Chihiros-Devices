@@ -15,7 +15,9 @@ Instagram: **@tianxu_07**
 
 Version 1.4.0 keeps all of the physically tested device support from v1.3.0 and adds support for additional devices based on publicly available open-source protocol information.
 
-If you only need the devices I have personally tested on real hardware, **v1.3.0 remains the recommended stable release for those devices.**
+If you only want support for the devices I have personally tested on real hardware, **v1.3.0 is the recommended stable release**.
+
+v1.3.0 includes only the six physically validated device implementations listed below and does not include the additional upstream-derived device profiles introduced in v1.4.0.
 
 ## Physically Tested Devices
 
@@ -29,6 +31,8 @@ The following devices have been tested by me on real hardware:
 - Chihiros Cooling Fan
 
 These implementations were developed and physically validated using the actual devices.
+
+If you use only these devices and prefer the stable version containing only physically tested implementations, download **v1.3.0**.
 
 ## Additional Device Support in v1.4.0
 
@@ -75,7 +79,7 @@ Windows 10 / 11 x64 with Bluetooth LE is required.
 
 Python is not required for the packaged application.
 
-The recommended download is:
+For v1.4.0, the recommended download is:
 
 ```text
 ChihirosLocalController-1.4.0-windows-x64.zip
@@ -104,6 +108,23 @@ SHA256SUMS.txt
 ```
 
 The application is unsigned, so Windows may display a SmartScreen warning.
+
+### Which version should I download?
+
+Use **v1.3.0** if you only need the six devices that I have personally tested on real hardware:
+
+- RGB Vivid II
+- A2 Max
+- Magnetic Light
+- Magnetic Light II
+- Z Light
+- Chihiros Cooling Fan
+
+v1.3.0 is the recommended stable release for these physically validated implementations.
+
+Use **v1.4.0** if you want the additional upstream-derived device support listed above.
+
+The additional v1.4.0 device profiles have not yet been physically tested by me.
 
 ## Basic Usage
 
