@@ -1,4 +1,4 @@
-# Chihiros Local Controller
+# Local Controller for Chihiros Devices
 
 A Windows application for controlling supported Chihiros aquarium lights and cooling fans directly over Bluetooth Low Energy.
 
@@ -67,7 +67,7 @@ If you own one of the upstream-derived devices and test it successfully, feedbac
 
 Light schedule editing is **not supported**.
 
-Chihiros Local Controller is mainly intended for direct/manual local control.
+Local Controller for Chihiros Devices is mainly intended for direct/manual local control.
 
 For simple daily on/off timing, using a **smart plug** is recommended.
 
@@ -131,7 +131,7 @@ The additional v1.4.0 device profiles have not yet been physically tested by me.
 1. Close My Chihiros on nearby phones or tablets.
 2. Enable Bluetooth on the Windows PC.
 3. Power on the Chihiros device.
-4. Launch Chihiros Local Controller.
+4. Launch Local Controller for Chihiros Devices.
 5. Click **Scan for Devices**.
 6. Select the device.
 7. Adjust the available controls.
