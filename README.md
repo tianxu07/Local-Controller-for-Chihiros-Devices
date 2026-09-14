@@ -7,11 +7,11 @@ No Chihiros account, login, internet connection, or Chihiros cloud service is re
 
 **Unofficial community tool. Not affiliated with Chihiros Aquatic Studio.**
 
-Created by **Tianxu Yang** · Instagram: **[@tianxu_07](https://www.instagram.com/tianxu_07/)**
+Created by **Tianxu Yang** · Instagram: **@tianxu_07**
 
 Version 1.4.0 keeps the six physically tested local implementations from v1.3.0
-and adds additional device support based on publicly available open-source
-protocol information.
+and adds additional device support based on publicly available open-source protocol
+information.
 
 The new upstream-derived device profiles have passed the project's automated
 protocol and safety tests, but have **not been physically tested by me on the
@@ -28,7 +28,7 @@ The following implementations have been tested by me on real hardware.
 
 ### Chihiros RGB Vivid II
 
-- Manual Red / Green / Blue sliders
+- Manual Red / Green / Blue control
 - Range: 0–100
 - Verified advertisement prefixes:
   - `DYNV`
@@ -42,6 +42,7 @@ The following implementations have been tested by me on real hardware.
 - Verified prefix: `DYNCMC`
 
 The implementation has been physically validated on one A2 Max unit.
+
 Compatibility with every hardware or firmware revision is not guaranteed.
 
 Brightness is represented as a normalized wire level internally and should not
@@ -51,7 +52,7 @@ be interpreted as a guarantee of exact official-app percentage equivalence.
 
 Original / first-generation Magnetic Light.
 
-- Red / Green controls
+- Red / Green control
 - Range: 0–100
 - Apply RG
 - Verified prefix: `DYCX`
@@ -61,14 +62,13 @@ Original / first-generation Magnetic Light.
 
 The implementation was physically tested on a real device.
 
-Local R20 / G40 visibly matched the official app's R20 / G40 setting during
-testing.
+Local R20 / G40 visibly matched the official app's R20 / G40 setting during testing.
 
 Values above 100, including overclock-style values, are intentionally unsupported.
 
 ### Chihiros Magnetic Light II
 
-- Red / Green / Blue / White controls
+- Red / Green / Blue / White control
 - Range: 0–100
 - Apply WRGB
 - Verified prefix: `DYMNC`
@@ -83,8 +83,8 @@ Manual WRGB control has been physically validated on three Magnetic Light II uni
 Testing confirmed that all three units could be independently selected and that
 only the selected device changed.
 
-An official-app R20 / G40 / B60 / W30 comparison matched visible color and
-apparent brightness in practical testing.
+An official-app R20 / G40 / B60 / W30 comparison matched visible color and apparent
+brightness in practical testing.
 
 This supports the practical direct 0–100 convention, not photometric linearity
 or laboratory-calibrated equivalence.
@@ -135,13 +135,13 @@ open-source protocol information.
 These implementations have passed automated protocol and safety tests but
 **have not been physically tested by me on the corresponding hardware**.
 
-Supported device families include:
+Supported upstream-derived device families include:
 
 - A II
 - A Series
 - New C
 - RGB + A PLUS
-- SEA LED
+- SEA_LED (`DYSEA`, upstream device label)
 - WRGB II
 - C II
 - Commander 4
@@ -150,9 +150,22 @@ Supported device families include:
 - Commander X
 - X300
 
-Some device families have separate newer and legacy protocol profiles internally.
+Some device families have separate legacy and newer protocol profiles internally.
 
-WRGB VIVID III support also includes:
+### WRGB II scope
+
+The upstream-derived WRGB II support in v1.4.0 applies to the regular WRGB II
+profiles implemented by this project.
+
+The following variants are **not supported** by the v1.4.0 upstream-derived path:
+
+- WRGB II Pro
+- WRGB II Slim
+- Universal WRGB
+
+### WRGB VIVID III
+
+WRGB VIVID III support includes:
 
 - Manual light control
 - Integrated fan control
@@ -161,19 +174,50 @@ WRGB VIVID III support also includes:
 - Passive fan RPM telemetry
 - Passive temperature telemetry
 
+### Upstream devices intentionally not enabled in v1.4.0
+
+Some devices are present in the upstream project but are intentionally not exposed
+as writable devices in Chihiros Local Controller 1.4.0.
+
+These include:
+
+- Commander 1
+- WRGB II Pro
+- WRGB II Slim
+- Universal WRGB
+- C II RGB
+- Z Light TINY
+- Tiny Terrarium Egg
+
+Upstream registry presence does not automatically mean that the device is supported
+by this project.
+
+The v1.4.0 implementation uses a fail-closed approach and only enables device
+profiles for which the expected transport and protocol behavior were considered
+sufficiently defined.
+
 Compatibility with every hardware or firmware revision cannot be guaranteed.
 
-If you own one of these devices and test it successfully, feedback is welcome.
+If you own one of the upstream-derived supported devices and test it successfully,
+feedback is welcome.
 
-### Schedule support
+---
+
+## Schedule support
 
 Light schedule editing is **not supported** in v1.4.0.
 
 The application is intended primarily for direct/manual local BLE control.
 
-Manual light operation may override an existing device schedule. To return to
-normal schedule-driven operation, use the official My Chihiros application after
-the local connection has ended.
+Manual light operation may override an existing device schedule.
+
+For simple daily on/off timing, using a **smart plug** is recommended.
+
+If you need to create, edit, or restore the light's normal schedule, use the
+official **My Chihiros** application after the local connection has ended.
+
+Chihiros Local Controller does not currently provide a light schedule editor or
+write stored light schedules to supported devices.
 
 ---
 
@@ -197,13 +241,14 @@ There is no:
 
 - Firmware / DFU access
 - Pairing reset
-- Rename function
+- Device rename
 - Raw packet entry
 - Automatic write retry
 - Guessed transport fallback
 
-A failed write may still have reached the physical device. Always check the
-physical result before retrying.
+A failed write may still have reached the physical device.
+
+Always check the physical result before retrying a failed operation.
 
 ---
 
