@@ -1,4 +1,4 @@
-Chihiros Local Controller 1.4.0
+Chihiros Local Controller 1.4.1
 Version 1.4.0 adds isolated upstream-derived
 light support and VIVID III fan/telemetry controls. See docs/upstream-support.md
 for exact coverage, withheld devices, evidence and verification. The six local
@@ -12,7 +12,7 @@ Instagram: @tianxu_07
 
 SUPPORTED MODELS
 
-This 1.4.0 release includes all six supported models below.
+This 1.4.1 release includes all six supported models below.
 Validation of the complete packaged build is pending. The current public release
 remains v1.2.0; these local artifacts have not been published.
 
@@ -55,13 +55,13 @@ to official-app percentages. Unrelated Nordic UART devices are not supported.
 START
 
 Windows 10/11 x64 with Bluetooth LE is required; Python is not required.
-Extract the entire ChihirosLocalController-1.4.0-windows-x64.zip package.
+Extract the entire ChihirosLocalController-1.4.1-windows-x64.zip package.
 Open the ChihirosLocalController folder
 and run ChihirosLocalController.exe. Keep the _internal directory beside it.
-The optional ChihirosLocalController-1.4.0-windows-x64-onefile.exe extracts its
+The optional ChihirosLocalController-1.4.1-windows-x64-onefile.exe extracts its
 runtime and may start slower.
 The previous public v1.2.0 package predates original Magnetic Light, Cooling Fan
-and Z Light support. This 1.4.0 package includes the upstream-derived device support described above.
+and Z Light support. This 1.4.1 package includes the upstream-derived device support described above.
 
 WORKFLOW
 

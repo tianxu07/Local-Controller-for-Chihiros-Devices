@@ -11,7 +11,7 @@ Instagram: **@tianxu_07**
 
 ## Current Version
 
-**v1.4.0**
+**v1.4.1**
 
 Version 1.4.0 keeps all of the physically tested device support from v1.3.0 and adds support for additional devices based on publicly available open-source protocol information.
 
@@ -79,10 +79,10 @@ Windows 10 / 11 x64 with Bluetooth LE is required.
 
 Python is not required for the packaged application.
 
-For v1.4.0, the recommended download is:
+For v1.4.1, the recommended download is:
 
 ```text
-ChihirosLocalController-1.4.0-windows-x64.zip
+ChihirosLocalController-1.4.1-windows-x64.zip
 ```
 
 Extract the entire ZIP and run:
@@ -96,7 +96,7 @@ Keep the `_internal` folder next to the executable.
 A standalone version is also available:
 
 ```text
-ChihirosLocalController-1.4.0-windows-x64-onefile.exe
+ChihirosLocalController-1.4.1-windows-x64-onefile.exe
 ```
 
 The one-file version may take slightly longer to start.
@@ -122,7 +122,7 @@ Use **v1.3.0** if you only need the six devices that I have personally tested on
 
 v1.3.0 is the recommended stable release for these physically validated implementations.
 
-Use **v1.4.0** if you want the additional upstream-derived device support listed above.
+Use **v1.4.1** if you want the additional upstream-derived device support listed above.
 
 The additional v1.4.0 device profiles have not yet been physically tested by me.
 

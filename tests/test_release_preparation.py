@@ -41,8 +41,8 @@ class ReleaseMetadataTests(unittest.TestCase):
             },
         )
 
-    def test_source_version_and_title_are_v140(self) -> None:
-        self.assertEqual(WINDOWS_APP_VERSION, "1.4.0")
+    def test_source_version_and_title_are_v141(self) -> None:
+        self.assertEqual(WINDOWS_APP_VERSION, "1.4.1")
         self.assertEqual(DEVELOPMENT_APP_VERSION, WINDOWS_APP_VERSION)
         self.assertEqual(DISPLAY_NAME, "Chihiros Local Controller")
         text = (ROOT / "gui" / "app.py").read_text(encoding="utf-8")
@@ -84,8 +84,8 @@ class ReleaseMetadataTests(unittest.TestCase):
 
     def test_binary_version_resource_matches_final_application(self) -> None:
         text = (ROOT / "packaging" / "version_info.txt").read_text(encoding="utf-8")
-        self.assertIn("filevers=(1, 4, 0, 0)", text)
-        self.assertIn("prodvers=(1, 4, 0, 0)", text)
+        self.assertIn("filevers=(1, 4, 1, 0)", text)
+        self.assertIn("prodvers=(1, 4, 1, 0)", text)
         self.assertIn(f"StringStruct(u'FileVersion', u'{WINDOWS_APP_VERSION}')", text)
         self.assertIn(f"StringStruct(u'ProductVersion', u'{WINDOWS_APP_VERSION}')", text)
         self.assertIn("u'ChihirosLocalController.exe'", text)
@@ -93,10 +93,28 @@ class ReleaseMetadataTests(unittest.TestCase):
         self.assertNotIn("1.0.0", text)
 
     def test_public_readmes_document_supported_models_and_release_limits(self) -> None:
-        for filename in ("README.md", "README.txt"):
+        # The public README summarizes releases; the packaged README retains
+        # detailed device-prefix and physical-validation documentation.
+        public_text = (ROOT / "README.md").read_text(encoding="utf-8").replace("**", "")
+        for required in ("v1.4.1", "RGB Vivid II", "A2 Max", "Magnetic Light II",
+                         "Magnetic Light", "Cooling Fan", "Z Light", "A II", "A Series",
+                         "New C", "RGB + A PLUS", "SEA_LED", "WRGB II", "C II",
+                         "Commander 4", "WRGB VIVID III", "RGB VIVID", "Commander X", "X300",
+                         "ChihirosLocalController.exe",
+                         "ChihirosLocalController-1.4.1-windows-x64.zip",
+                         "ChihirosLocalController-1.4.1-windows-x64-onefile.exe",
+                         "Light schedule editing is not supported", "smart plug", "My Chihiros",
+                         "have not been physically tested", "cannot be guaranteed",
+                         "THIRD_PARTY_LICENSES.txt", "Tianxu Yang", "@tianxu_07"):
+            with self.subTest(filename="README.md", required=required):
+                self.assertIn(required, public_text)
+        self.assertNotIn("1.1.0.dev1", public_text)
+        self.assertNotIn("1.4.0.dev1", public_text)
+        self.assertNotIn("1.4.1.dev1", public_text)
+        for filename in ("README.txt",):
             text = (ROOT / filename).read_text(encoding="utf-8")
             with self.subTest(filename=filename):
-                for required in ("1.4.0", "RGB Vivid II", "A2 Max", "DYNCMC", "ChihirosLocalController.exe",
+                for required in ("1.4.1", "RGB Vivid II", "A2 Max", "DYNCMC", "ChihirosLocalController.exe",
                                  "Magnetic Light II", "DYMNC", "Apply WRGB",
                                  "Magnetic Light", "DYCX", "Apply RG",
                                  "Cooling Fan", "DYNFAN", "Refresh Status",
@@ -105,14 +123,15 @@ class ReleaseMetadataTests(unittest.TestCase):
                                  "Threshold read-back", "Silent Mode",
                                  "physically validated on a real device",
                                  "three Magnetic Light II units", "photometric", "linearity",
-                                 "ChihirosLocalController-1.4.0-windows-x64.zip",
-                                 "ChihirosLocalController-1.4.0-windows-x64-onefile.exe",
+                                 "ChihirosLocalController-1.4.1-windows-x64.zip",
+                                 "ChihirosLocalController-1.4.1-windows-x64-onefile.exe",
                                  "Scan for Devices", "Apply RGB", "Apply Brightness", "smart plug",
                                  "THIRD_PARTY_LICENSES.txt", "Tianxu Yang", "@tianxu_07"):
                     self.assertIn(required, text)
                 self.assertIn("not guaranteed", text.replace("**", ""))
                 self.assertNotIn("1.1.0.dev1", text)
                 self.assertNotIn("1.4.0.dev1", text)
+                self.assertNotIn("1.4.1.dev1", text)
 
     def test_builder_requires_fresh_versioned_paths_and_has_no_publication_step(self) -> None:
         text = (ROOT / "packaging" / "build_release.ps1").read_text(encoding="utf-8")

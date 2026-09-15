@@ -439,7 +439,7 @@ class LockedSourceTests(unittest.TestCase):
             current = (root / relative).read_bytes()
             if name == "constants":
                 current = current.replace(
-                    b'WINDOWS_APP_VERSION = "1.4.0"',
+                    b'WINDOWS_APP_VERSION = "1.4.1"',
                     b'WINDOWS_APP_VERSION = "1.3.0"',
                 )
             self.assertEqual(current.replace(b"\r\n", b"\n"), baseline.replace(b"\r\n", b"\n"), relative)

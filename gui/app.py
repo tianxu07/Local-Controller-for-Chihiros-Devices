@@ -6,6 +6,7 @@ import asyncio
 import concurrent.futures
 import queue
 import threading
+import webbrowser
 import tkinter as tk
 from dataclasses import dataclass
 from tkinter import messagebox, ttk
@@ -227,14 +228,28 @@ class ChihirosApplication:
             font=("Segoe UI", 8),
         )
         self.disclaimer_label.pack(anchor="w", pady=(9, 0))
+        self.attribution_frame = ttk.Frame(self.footer_frame)
+        self.attribution_frame.pack(anchor="w", pady=(3, 0))
         self.author_label = ttk.Label(
-            self.footer_frame,
-            text="Created by Tianxu Yang · Instagram: @tianxu_07",
+            self.attribution_frame,
+            text="Created by Tianxu Yang · ",
             wraplength=560,
             foreground="#777777",
             font=("Segoe UI", 8),
         )
-        self.author_label.pack(anchor="w", pady=(3, 0))
+        self.author_label.pack(side="left")
+        self.instagram_link = ttk.Label(
+            self.attribution_frame,
+            text="Instagram: @tianxu_07",
+            foreground="#0000EE",
+            font=("Segoe UI", 8, "underline"),
+            cursor="hand2",
+        )
+        self.instagram_link.pack(side="left")
+        self.instagram_link.bind(
+            "<Button-1>",
+            lambda _event: webbrowser.open("https://www.instagram.com/tianxu_07/"),
+        )
 
         device_frame = ttk.LabelFrame(outer, text="Device", padding=12)
         device_frame.pack(fill="x")

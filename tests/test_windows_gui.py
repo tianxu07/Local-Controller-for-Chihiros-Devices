@@ -7,6 +7,10 @@ import tkinter as tk
 import unittest
 from dataclasses import dataclass, field
 from pathlib import Path
+from unittest.mock import patch
+from tkinter import font as tkfont
+
+from chihiros.upstream_profiles import PROFILES
 
 from chihiros.constants import (
     COOLING_FAN_MODEL,
@@ -304,7 +308,7 @@ class GuiCoreIntegrationTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 controller.close()
             data = json.loads(log_path.read_text(encoding="utf-8"))
-            self.assertEqual(data["application"]["application_version"], "1.4.0")
+            self.assertEqual(data["application"]["application_version"], "1.4.1")
             self.assertIn("controller_version", data["application"])
             self.assertIn("windows_version", data["application"])
             self.assertEqual(data["device"]["name"], "DYNVLOG")
@@ -336,6 +340,38 @@ class GuiCoreIntegrationTests(unittest.IsolatedAsyncioTestCase):
 
 
 class StartupLayoutTests(unittest.TestCase):
+    def test_instagram_link_opens_browser_and_stays_global(self) -> None:
+        root = tk.Tk()
+        root.attributes("-alpha", 0.0)
+        with tempfile.TemporaryDirectory() as directory:
+            application = app.ChihirosApplication(root, ApplicationController(Path(directory)))
+            try:
+                link = application.instagram_link
+                self.assertEqual(link.cget("text"), "Instagram: @tianxu_07")
+                self.assertEqual(str(link.cget("foreground")), "#0000EE")
+                self.assertEqual(str(link.cget("cursor")), "hand2")
+                self.assertTrue(tkfont.Font(root=root, font=link.cget("font")).actual("underline"))
+                devices = tuple(CompatibleDevice(p.prefixes[0] + "_SYNTHETIC",
+                                f"02:00:00:40:00:{i:02X}", p.name)
+                                for i, p in enumerate(PROFILES, 1))
+                with patch("gui.app.webbrowser.open") as open_browser, patch("gui.app.messagebox.showinfo"):
+                    for selected in (None, *devices, None):
+                        application._scan_completed((selected,) if selected else ())
+                        for busy in (True, False):
+                            application._set_busy(busy)
+                            root.update()
+                            self.assertIs(application.instagram_link, link)
+                            self.assertTrue(link.winfo_ismapped())
+                            self.assertLessEqual(link.winfo_rooty() + link.winfo_height(),
+                                                 root.winfo_rooty() + root.winfo_height())
+                            link.event_generate("<Button-1>")
+                            open_browser.assert_called_with("https://www.instagram.com/tianxu_07/")
+                            open_browser.reset_mock()
+            finally:
+                for callback in root.tk.call("after", "info"):
+                    root.after_cancel(callback)
+                application.close()
+
     def test_default_window_shows_footer_and_status_without_resizing(self) -> None:
         try:
             root = tk.Tk()
@@ -360,6 +396,7 @@ class StartupLayoutTests(unittest.TestCase):
                 application.smart_plug_label,
                 application.disclaimer_label,
                 application.author_label,
+                application.instagram_link,
                 application.status_label,
             ):
                 with self.subTest(text=widget.cget("text")):
@@ -412,20 +449,23 @@ class StartupLayoutTests(unittest.TestCase):
 
                         self.assertEqual(str(application.footer_frame), footer_identity)
                         self.assertIs(application.disclaimer_label.master, application.footer_frame)
-                        self.assertIs(application.author_label.master, application.footer_frame)
+                        self.assertIs(application.attribution_frame.master, application.footer_frame)
+                        self.assertIs(application.author_label.master, application.attribution_frame)
+                        self.assertIs(application.instagram_link.master, application.attribution_frame)
                         self.assertEqual(
                             application.disclaimer_label.cget("text"),
                             "Unofficial community tool. Not affiliated with Chihiros Aquatic Studio.",
                         )
                         self.assertEqual(
                             application.author_label.cget("text"),
-                            "Created by Tianxu Yang · Instagram: @tianxu_07",
+                            "Created by Tianxu Yang · ",
                         )
                         root_bottom = root.winfo_rooty() + root.winfo_height()
                         for widget in (
                             application.footer_frame,
                             application.disclaimer_label,
                             application.author_label,
+                            application.instagram_link,
                         ):
                             self.assertTrue(widget.winfo_ismapped())
                             self.assertLessEqual(
