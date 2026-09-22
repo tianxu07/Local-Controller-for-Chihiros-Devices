@@ -116,9 +116,29 @@ For these six devices, **v1.3.0 is the recommended stable release** if you prefe
 
 Use **v1.4.1** if you want support for the additional device profiles listed above.
 
-v1.4.1 retains all physically tested device support from v1.3.0 and adds the additional upstream-derived device implementations introduced in v1.4.0.
+v1.4.1 retains all physically tested device support from v1.3.0 and includes the additional upstream-derived device implementations introduced in v1.4.0.
 
 These additional profiles have not yet been physically tested by me on their corresponding hardware.
+
+## Schedule Support
+
+Light schedule editing is **not supported**.
+
+Local Controller for Chihiros Devices is mainly intended for direct, manual local control of supported Chihiros devices without requiring the My Chihiros app to remain connected.
+
+For simple daily power on/off timing, using a **smart plug** is recommended.
+
+If you want to create, edit, or restore the light's normal schedule, use the official **My Chihiros** application after the local Bluetooth connection has ended.
+
+## Current Version
+
+**v1.4.1**
+
+Version 1.4.1 includes all physically tested device support from v1.3.0 together with the additional device profiles introduced in v1.4.0.
+
+The additional v1.4.x device profiles are based on publicly available open-source protocol information and have passed the project's automated protocol and safety tests, but have not been physically tested by me on all corresponding hardware.
+
+If you only want support for devices that I have personally tested on real hardware, **v1.3.0 remains the recommended stable release**.
 
 ## Basic Usage
 
@@ -134,16 +154,6 @@ These additional profiles have not yet been physically tested by me on their cor
 Scanning, selecting a device, or moving sliders does not send control commands until an Apply action is used.
 
 Multiple devices are kept separate using their full BLE addresses.
-
-## Schedule Support
-
-Light schedule editing is **not supported**.
-
-Local Controller for Chihiros Devices is mainly intended for direct, manual local control of supported Chihiros devices without requiring the My Chihiros app to remain connected.
-
-For simple daily power on/off timing, using a **smart plug** is recommended.
-
-If you want to create, edit, or restore the light's normal schedule, use the official **My Chihiros** application after the local Bluetooth connection has ended.
 
 ## Important Notes
 
@@ -163,16 +173,6 @@ The application does not provide:
 * Automatic write retry
 
 A failed BLE write may still have reached the device, so check the physical result before retrying.
-
-## Current Version
-
-**v1.4.1**
-
-Version 1.4.1 includes all physically tested device support from v1.3.0 together with the additional device profiles introduced in v1.4.0.
-
-The additional v1.4.x device profiles are based on publicly available open-source protocol information and have passed the project's automated protocol and safety tests, but have not been physically tested by me on all corresponding hardware.
-
-If you only want support for devices that I have personally tested on real hardware, **v1.3.0 remains the recommended stable release**.
 
 ## Why Use Local Controller for Chihiros Devices?
 
